@@ -4,8 +4,6 @@ const fs = require('node:fs/promises');
 const PORT = 5000;
 const HOST = '::1';
 
-let fileHandle, fileWriteStream;
-
 const server = net.createServer();
 
 server.listen(PORT, HOST, () => {
@@ -14,6 +12,7 @@ server.listen(PORT, HOST, () => {
 
 server.on('connection', socket => {
   console.log('New Connection!!');
+  let fileHandle, fileWriteStream;
   
   socket.on('data', async (data) => {
     if (!fileHandle) {
@@ -42,7 +41,7 @@ server.on('connection', socket => {
   socket.on('error', error => {
     console.error('Error:', error);
     socket.end();
-  })
+  });
   
   socket.on('end', () => {
     console.log('Connection ended!');
